@@ -8,3 +8,5 @@ Esta é uma versão mais simplificada, porém de inicio vamos ter um canhão/obu
 O projetil disparado será afetado pela gravidade e, portanto, não seguira uma trajetória retilinea. A interação entre usuário e jogo vai vir a partir do disparo: O jogador irá controlar a elevação e intensidade do projetil. 
 
 Por enquanto, utilizaremos como base algumas ideias praticadas no servidor de exercicios de Dessoft: O jaca wars (dentro de if) e lançamento de projetil (dentro de funções).
+
+Na primeira iteração, vamos criar a versão mais simples possível para depois aprofundar.
