@@ -195,4 +195,39 @@ class Tiro(pygame.sprite.Sprite):
             self.kill()
 
 
-  
+#================================================================
+
+#Parte do menu =================================================================
+
+
+# Main Menu
+
+def mainmenu():
+    assets = load_assets()
+    loop = True
+            
+    while loop:
+        window.fill((0, 0, 0))  
+        window.blit(assets['backgroundmain'], (0, 0))
+
+
+        font = pygame.font.Font("freesansbold.ttf", 150)
+        text_surf = font.render("Jogo do canhão", True, (196, 190, 0))
+        text_rect = text_surf.get_rect(center=(WIDTH//2, 200))
+        window.blit(text_surf, text_rect)
+
+
+        font = pygame.font.Font("freesansbold.ttf", 30)
+        text_surf = font.render("Pressione A para jogar", True, ORANGE)
+        text_rect = text_surf.get_rect(midtop = (WIDTH//2, 5))
+        window.blit(text_surf, text_rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    game_screen(window)               
+            
+        pygame.display.update()
