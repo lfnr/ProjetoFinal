@@ -1,4 +1,3 @@
-
 class Canhao(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
@@ -6,14 +5,15 @@ class Canhao(pygame.sprite.Sprite):
         self.image = assets['canhao_png']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.left = WIDTH / 2
-        self.rect.centery = HEIGHT - 10 #A ajustar
+        self.rect.center = (CANHAO_WIDTH, HEIGHT + 100 - CANHAO_HEIGHT)
         self.groups = groups
         self.assets = assets
 
         # Só será possível atirar uma vez a cada 2000 milissegundos
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 2000
+        self.shoot_ticks = 500
+
+
 
     def shoot(self):
         # Verifica se pode atirar
@@ -25,20 +25,8 @@ class Canhao(pygame.sprite.Sprite):
         if elapsed_ticks > self.shoot_ticks:
             # Marca o tick da nova imagem.
             self.last_shot = now
-        
-            new_bullet = Tiro(self.assets, self.rect.left, self.rect.centery)
-            self.groups[''].add(new_bullet)
-            self.groups[''].add(new_bullet)
-            self.assets[''].play()
-
-
-class Alvo(pygame.sprite.Sprite):
-    def __init__(self, assets):
-        # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
-
-        self.image = assets['alvo_png']
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect = self.image.get_rect()
-        self.rect.x = WIDTH - 20 #Dimensões da tela. É pra ser fixo
-        self.rect.y = random.randint(0, HEIGHT) #Dimensões da tela
+            velx, vely = calculatePower(60)
+            # A nova bala vai ser criada logo acima e no centro horizontal do canhão
+            novo_tiro = Tiro(self.assets, velx, -vely)
+            self.groups['all_sprites'].add(novo_tiro)
+            self.groups['all_tiros'].add(novo_tiro)
