@@ -53,3 +53,20 @@ class AlvoMovel(pygame.sprite.Sprite):
 
         if self.rect.bottom > HEIGHT or self.rect.top < 0:
             self.speedy = self.speedy*-1
+            
+            
+            
+            
+class Alvo(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets['alvo_png']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = WIDTH - 100 #Dimensões da tela. É pra ser fixo
+        self.rect.y = random.randint(150, HEIGHT -100) #Dimensões da tela
+
+        
+  
