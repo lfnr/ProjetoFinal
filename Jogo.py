@@ -26,8 +26,29 @@ LINE_LENGTH = 100
 #Variaveis de tela
 
 
-#Alterar valor da gravidade 
+#Valor da gravidade 
 gr = 1
+
+#===================================
+#Funções para funcionamento
+
+def load_assets():
+    assets = {}
+    assets['background'] = pygame.image.load('jogo/Background.png').convert()
+    assets['backgroundmain'] = pygame.image.load('jogo/backgroundmain.png').convert()
+    assets['backgroundmain'] = pygame.transform.scale(assets['backgroundmain'], (WIDTH, HEIGHT))
+    assets['alvo_png'] = pygame.image.load('jogo/alvo.png').convert_alpha()
+    assets['alvo_png'] = pygame.transform.scale(assets['alvo_png'], (ALVO_WIDTH, ALVO_HEIGHT))
+    assets['canhao_png'] = pygame.image.load('jogo/canhao.png').convert_alpha()
+    assets['canhao_png'] = pygame.transform.scale(assets['canhao_png'], (CANHAO_WIDTH, CANHAO_HEIGHT))
+    assets['tiro_png'] = pygame.image.load('jogo/tiro.png').convert_alpha()
+    assets['tiro_png'] = pygame.transform.scale(assets['tiro_png'], (50, 50))
+
+
+    return assets
+
+
+
 
 class Canhao(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
