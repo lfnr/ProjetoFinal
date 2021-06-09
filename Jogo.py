@@ -231,3 +231,113 @@ def mainmenu():
                     game_screen(window)               
             
         pygame.display.update()
+        
+
+def game_screen(window):
+    clock = pygame.time.Clock()
+
+    assets = load_assets()
+
+
+
+    # Criando as sprites
+    all_sprites = pygame.sprite.Group()
+    all_alvos = pygame.sprite.Group()
+    all_alvo_movel = pygame.sprite.Group()
+    all_tiros = pygame.sprite.Group()
+    groups = {}
+    groups['all_sprites'] = all_sprites
+    groups['all_alvos'] = all_alvos
+    groups['all_tiros'] = all_tiros
+    groups['all_alvo_movel'] = all_alvo_movel
+
+    # Criando o jogador
+    player = Canhao(groups, assets)
+    all_sprites.add(player)
+
+    #Numero de alvos
+    alvos_vivos = 2
+
+    todos_os_alvos = []
+
+
+    # Criando os alvos
+    for i in range(1):
+        alvo = Alvo(assets)
+        alvo_movel = AlvoMovel(assets)
+        all_sprites.add(alvo)
+        all_sprites.add(alvo_movel)
+        all_alvos.add(alvo)
+        all_alvos.add(alvo_movel)
+        todos_os_alvos.append(alvo)
+        todos_os_alvos.append(alvo_movel)
+
+
+    PLAYING = 1
+    state = PLAYING
+
+    novo_tiro = None
+
+    # ===== Loop principal =====
+    while True:
+        clock.tick(FPS)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            # Só verifica o teclado se está no estado de jogo
+            if state == PLAYING:
+                # Verifica se apertou alguma tecla.
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # Verifica se pode atirar
+                        now = pygame.time.get_ticks()
+                        # Verifica quantos ticks se passaram desde o último tiro.
+                        
+
+                       
+                        # Marca a força/velocidade da bala
+                        velx, vely = calculatePower(60)
+                        
+                        #Cria novo tiro
+                        novo_tiro = Tiro(assets, velx, -vely)
+                        groups['all_sprites'].add(novo_tiro)
+                        groups['all_tiros'].add(novo_tiro)
+
+
+           # ----- Atualiza estado do jogo
+        # Atualizando a posição dos alvos
+        all_sprites.update()
+            
+        
+        if alvo.rect.colliderect(alvo_movel.rect):
+            alvo_movel.speedy = alvo_movel.speedy * -1
+
+        if novo_tiro != None:  
+            for a in todos_os_alvos:
+                a.checkMorre(novo_tiro)
+                if novo_tiro.rect.colliderect(a.rect):
+                    todos_os_alvos.remove(a)
+                    alvos_vivos -= 1
+                
+    
+
+        if alvos_vivos == 0:
+            mainmenu()
+
+
+
+        # ----- Cria a tela
+        window.fill((0, 0, 0))  
+        window.blit(assets['background'], (0, 0))
+        all_sprites.draw(window)
+
+        #Linha da mira
+        drawLine()
+
+        pygame.display.update()  # Mostra o novo frame para o jogador
+
+        
+       #Roda o main menu
+mainmenu()
