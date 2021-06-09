@@ -69,4 +69,36 @@ class Alvo(pygame.sprite.Sprite):
         self.rect.y = random.randint(150, HEIGHT -100) #Dimensões da tela
 
         
+class Tiro(pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__(self, assets, velx, vely):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets['tiro_png']
+
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.velx = velx
+        self.vely = vely
+
+
+
+        # Coloca no lugar inicial definido em x, y do constutor
+        self.rect.centerx = LAUNCH_POINT[0] #Alterar valor baseado nas dimensões da tela
+        self.rect.centery = LAUNCH_POINT[1]
+
+
+    def update(self):
+
+        self.rect.x += self.velx
+        self.vely += gr
+        self.rect.y += self.vely
+        #Aqui que eu altero a gravidade
+
+        # Se o tiro passar do inicio da tela, morre.
+        if self.rect.right > WIDTH:
+            self.kill()
+
+
   
