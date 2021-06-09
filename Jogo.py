@@ -29,7 +29,7 @@ LINE_LENGTH = 100
 #Valor da gravidade 
 gr = 1
 
-#===================================
+#===========================================
 #Funções para funcionamento
 
 def load_assets():
@@ -46,6 +46,7 @@ def load_assets():
 
 
     return assets
+
 
 
 def mousetracker():
@@ -67,7 +68,40 @@ def mousetracker():
     except:
         pass
 
+    
+    
+def calculatePower(length):
+    mx, my = pygame.mouse.get_pos()
 
+    if mx - LAUNCH_POINT[0] != 0:
+        a = math.atan((LAUNCH_POINT[1] - my)/(mx - LAUNCH_POINT[0]))
+
+        if mx - LAUNCH_POINT[0] > 0 and LAUNCH_POINT[1] - my > 0:
+            if 0 < a < math.pi:
+                return int(length*math.cos(a)), int(length*math.sin(a))
+        
+        else:
+            if mx - LAUNCH_POINT[0] < 0:
+                return 0, length
+            elif LAUNCH_POINT[1] - my < 0:
+                return length, 0
+    
+    else: return 0, length 
+
+
+
+def drawLine():
+    endPoint = mousetracker()
+
+    if endPoint != None:
+        pygame.draw.line(window, (0, 0, 0), LAUNCH_POINT, endPoint, 3)
+    else:
+        pygame.draw.line(window, (0, 0, 0), LAUNCH_POINT , (LAUNCH_POINT[0] + LINE_LENGTH, LAUNCH_POINT[1]), 3)
+
+  
+#=================================================
+#Classes
+    
 
 class Canhao(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
