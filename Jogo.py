@@ -30,3 +30,26 @@ class Canhao(pygame.sprite.Sprite):
             novo_tiro = Tiro(self.assets, velx, -vely)
             self.groups['all_sprites'].add(novo_tiro)
             self.groups['all_tiros'].add(novo_tiro)
+
+              
+            
+        
+class AlvoMovel(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets['alvo_png']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.speedy = random.randint(5, 20) 
+        self.rect.x = WIDTH - 100 #Dimensões da tela. É pra ser fixo
+        self.rect.y += self.speedy
+
+
+    #tentativa de fazer ele subir quando atingir o fim da tela
+    def update(self):
+        self.rect.y += self.speedy
+
+        if self.rect.bottom > HEIGHT or self.rect.top < 0:
+            self.speedy = self.speedy*-1
