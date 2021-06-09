@@ -34,6 +34,10 @@ class AlvoMovel(pygame.sprite.Sprite):
 
         if self.rect.bottom > HEIGHT or self.rect.top < 0:
             self.speedy = self.speedy*-1
+
+    def checkMorre(self, tiro):
+        if self.rect.colliderect(tiro.rect):
+            self.kill()
             
             
             
@@ -47,7 +51,11 @@ class Alvo(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = WIDTH - 100 #Dimensões da tela. É pra ser fixo
-        self.rect.y = random.randint(150, HEIGHT -100) #Dimensões da tela
+        self.rect.y = random.randint(250, HEIGHT) #Dimensões da tela
+    
+    def checkMorre(self, tiro):
+        if self.rect.colliderect(tiro.rect):
+            self.kill()
 
         
 class Tiro(pygame.sprite.Sprite):
