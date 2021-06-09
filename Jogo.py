@@ -1,3 +1,34 @@
+import sys
+import pygame
+import random
+import math
+
+
+pygame.init()
+pygame.mixer.init()
+
+WIDTH = 1600
+HEIGHT = 960
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Jogo do canhão')
+
+#-------------------------------------------
+ORANGE= (255, 166, 0)
+
+
+FPS = 30
+ALVO_WIDTH = 100
+ALVO_HEIGHT = 100
+CANHAO_WIDTH = 150
+CANHAO_HEIGHT = 150
+LAUNCH_POINT = (CANHAO_WIDTH + 57, HEIGHT + 58 - CANHAO_HEIGHT)
+LINE_LENGTH = 100
+#Variaveis de tela
+
+
+#Alterar valor da gravidade 
+gr = 1
+
 class Canhao(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
