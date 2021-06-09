@@ -25,8 +25,20 @@ class Canhao(pygame.sprite.Sprite):
         if elapsed_ticks > self.shoot_ticks:
             # Marca o tick da nova imagem.
             self.last_shot = now
-            # A nova bala vai ser criada logo acima e no centro horizontal da nave
+        
             new_bullet = Tiro(self.assets, self.rect.left, self.rect.centery)
             self.groups[''].add(new_bullet)
             self.groups[''].add(new_bullet)
             self.assets[''].play()
+
+
+class Alvo(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets['alvo_png']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = WIDTH - 20 #Dimensões da tela. É pra ser fixo
+        self.rect.y = random.randint(0, HEIGHT) #Dimensões da tela
