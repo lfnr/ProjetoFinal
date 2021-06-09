@@ -48,6 +48,25 @@ def load_assets():
     return assets
 
 
+def mousetracker():
+    mx, my = pygame.mouse.get_pos()
+
+    try:
+        a = math.atan((LAUNCH_POINT[1] - my)/(mx - LAUNCH_POINT[0]))
+
+        if mx - LAUNCH_POINT[0] > 0 and LAUNCH_POINT[1] - my > 0:
+            if 0 < a < math.pi:
+                return int(LAUNCH_POINT[0] + LINE_LENGTH*math.cos(a)), int(LAUNCH_POINT[1] - LINE_LENGTH*math.sin(a))
+        
+        else:
+            if mx - LAUNCH_POINT[0] < 0:
+                return LAUNCH_POINT[0], LAUNCH_POINT[1] - LINE_LENGTH
+            elif LAUNCH_POINT[1] - my < 0:
+                return LAUNCH_POINT[0] + LINE_LENGTH, LAUNCH_POINT[1]
+
+    except:
+        pass
+
 
 
 class Canhao(pygame.sprite.Sprite):
