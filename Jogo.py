@@ -86,7 +86,7 @@ class Tiro(pygame.sprite.Sprite):
         #Aqui que eu altero a gravidade
 
         # Se o tiro passar do inicio da tela, morre.
-        if self.rect.right > WIDTH:
+        if self.rect.right > WIDTH + self.rect.width:
             self.kill()
 
 
