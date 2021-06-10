@@ -262,6 +262,17 @@ def mainmenu():
         text_surf = font.render("Pressione D para dificil", True, ORANGE)
         text_rect = text_surf.get_rect(center = (WIDTH//2, 600))
         window.blit(text_surf, text_rect)
+        
+        #Instruções de como jogar
+        font = pygame.font.Font("freesansbold.ttf", 70)
+        text_surf = font.render("Aperte Espaço para atirar", True, RED)
+        text_rect = text_surf.get_rect(midbottom = (WIDTH//2,800))
+        window.blit(text_surf, text_rect)
+
+        font = pygame.font.Font("freesansbold.ttf", 70)
+        text_surf = font.render("Utilize o mouse para mirar", True, RED)
+        text_rect = text_surf.get_rect(midbottom = (WIDTH//2,900))
+        window.blit(text_surf, text_rect)
 
         
         #Diferentes eventos para cada uma das teclas. Cada uma delas retorna uma dificuldade diferente que será utilizada como argumento da função da game screen.
@@ -287,7 +298,7 @@ def mainmenu():
 
 def game_screen(dificuldade):
 
-#Load assets
+    #Load assets
     assets = load_assets()
  
     clock = pygame.time.Clock()
