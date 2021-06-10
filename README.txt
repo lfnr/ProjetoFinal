@@ -9,3 +9,8 @@ Cada dificuldade aumenta o numero de alvos disponiveis, sem alterar o numero de 
 
 Este é o link do video demonstrando o funcionamento do jogo.
 https://www.youtube.com/watch?v=xgMcxkKs5KU
+
+
+Grupo composto por:
+Luiz Fernando Rafare
+Augusto Giuliani
