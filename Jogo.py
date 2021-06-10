@@ -1,3 +1,4 @@
+#Importa as bibliotecas
 import sys
 import pygame
 import random
@@ -11,18 +12,25 @@ WIDTH = 1600
 HEIGHT = 960
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
+
+#Roda a música de fundo do jogo.
 pygame.mixer.music.load('jogo/Music-Rain.wav')
 pygame.mixer.music.set_volume(0.2)
 
+#Coloca a música em loop.
 pygame.mixer.music.play(loops=-1)
 
+#Titulo do jogo.
 pygame.display.set_caption('Jogo do canhão')
 
 #-------------------------------------------
+#Códigos das cores que foram usadas para criação de texto nas Screens.
 ORANGE= (255, 166, 0)
 RED = (255, 0, 0)
 SELECTEDREDDISHBROWN = (166, 42, 3)
 
+
+#Valores da tela e posições
 FPS = 30
 ALVO_WIDTH = 100
 ALVO_HEIGHT = 100
@@ -30,10 +38,10 @@ CANHAO_WIDTH = 150
 CANHAO_HEIGHT = 150
 LAUNCH_POINT = (CANHAO_WIDTH + 57, HEIGHT + 58 - CANHAO_HEIGHT)
 LINE_LENGTH = 100
-#Valores da tela e posições
 
 
-#Alterar valor da gravidade 
+
+#Valor da gravidade 
 gr = 1
 
 
@@ -57,22 +65,22 @@ def load_assets():
     pygame.mixer.Sound.set_volume(assets['boom'], 0.3)
 
 
-
-
     return assets
 
 
-#Acompanha o mouse
+#Função que acompanha o mouse e retorna o angulo entre ele e o eixo X (Utilizando como referência a parte de baixo da tela.
 def mousetracker():
+    #Pega a posição do mouse.
     mx, my = pygame.mouse.get_pos()
 
+    #Calculos dos angulos.
     try:
         a = math.atan((LAUNCH_POINT[1] - my)/(mx - LAUNCH_POINT[0]))
 
         if mx - LAUNCH_POINT[0] > 0 and LAUNCH_POINT[1] - my > 0:
             if 0 < a < math.pi:
                 return int(LAUNCH_POINT[0] + LINE_LENGTH*math.cos(a)), int(LAUNCH_POINT[1] - LINE_LENGTH*math.sin(a))
-        
+   
         else:
             if mx - LAUNCH_POINT[0] < 0:
                 return LAUNCH_POINT[0], LAUNCH_POINT[1] - LINE_LENGTH
@@ -93,7 +101,7 @@ def drawLine():
 
 
         
-#Calcula a trahetória/ vetor velocidade do tiro.
+#Calcula a traJetória/ vetor velocidade do tiro.
 def calculatePower(length):
     mx, my = pygame.mouse.get_pos()
 
@@ -116,7 +124,7 @@ def calculatePower(length):
 #Classes ===========================================
 
 
-
+#Classe canhao. É um objeto imóvel, sem animações.
 class Canhao(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
@@ -154,14 +162,14 @@ class AlvoMovel(pygame.sprite.Sprite):
         if self.rect.bottom > HEIGHT or self.rect.top < 0:
             self.speedy = self.speedy*-1
 
-    #Verifica colisão com o tiro
+    #Verifica colisão com o tiro. E, caso o evento tenha ocorrido, mata o alvo.
     def checkMorre(self, tiro):
         if self.rect.colliderect(tiro.rect):
             self.kill()
 
 
 
-#Alvo fixo. Não se move
+#Alvo fixo. Não se move.
 class Alvo(pygame.sprite.Sprite):
     def __init__(self, assets, dif):
         # Construtor da classe mãe (Sprite).
@@ -174,7 +182,7 @@ class Alvo(pygame.sprite.Sprite):
         self.rect.y = random.randint(250, HEIGHT - 75) #Dimensões da tela
     
     
-    #Verifica colisão com o tiro.
+    #Verifica colisão com o tiro. E, caso o evento tenha ocorrido, mata o alvo.
     def checkMorre(self, tiro):
         if self.rect.colliderect(tiro.rect):
             self.kill()
@@ -183,7 +191,7 @@ class Alvo(pygame.sprite.Sprite):
 
 
 
-
+#Este é o objeto Tiro, utilizado para a mecânica de colisão.
 class Tiro(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, assets, velx, vely):
@@ -204,12 +212,12 @@ class Tiro(pygame.sprite.Sprite):
         self.rect.centery = LAUNCH_POINT[1]
 
 #Aqui a velocidade é afetada pela aceleração da gravidade. O valor dela foi ajustado para o jogo.
+# gr é uma variavel definida no começo do código. É a simulação da gravidade.
     def update(self):
 
         self.rect.x += self.velx
         self.vely += gr
         self.rect.y += self.vely
-        #Aqui que eu altero a gravidade
 
         # Se o tiro passar do inicio da tela, morre.
         if self.rect.right > WIDTH + self.rect.width:
@@ -220,14 +228,11 @@ class Tiro(pygame.sprite.Sprite):
 
 
 
-#Parte do menu =================================================================
-
-
-# Main Menu
+# Main Menu ====================================================
 
 def mainmenu():
     
-
+#Load os assets
     assets = load_assets()
     loop = True
             
@@ -236,23 +241,23 @@ def mainmenu():
         window.fill((0, 0, 0))  
         window.blit(assets['backgroundmain'], (0, 0))
 
-
+    #Titulo do jogo: "Jogo do canhão"
         font = pygame.font.Font("freesansbold.ttf", 150)
         text_surf = font.render("Jogo do canhão", True, (196, 190, 0))
         text_rect = text_surf.get_rect(center=(WIDTH//2, 200))
         window.blit(text_surf, text_rect)
 
-
+    #Modo facíl
         font = pygame.font.Font("freesansbold.ttf", 30)
         text_surf = font.render("Pressione A para modo fácil", True, ORANGE)
         text_rect = text_surf.get_rect(center = (WIDTH//2, 400))
         window.blit(text_surf, text_rect)
-
+    #Modo médio
         font = pygame.font.Font("freesansbold.ttf", 30)
         text_surf = font.render("Pressione S para modo médio", True, ORANGE)
         text_rect = text_surf.get_rect(center = (WIDTH//2, 500))
         window.blit(text_surf, text_rect)
-
+    #Modo difícil
         font = pygame.font.Font("freesansbold.ttf", 30)
         text_surf = font.render("Pressione D para dificil", True, ORANGE)
         text_rect = text_surf.get_rect(center = (WIDTH//2, 600))
@@ -277,12 +282,12 @@ def mainmenu():
 
 
 
-#Jogo ============================================
+#Jogo =========================================================
 
 
 def game_screen(dificuldade):
 
-
+#Load assets
     assets = load_assets()
  
     clock = pygame.time.Clock()
@@ -305,7 +310,7 @@ def game_screen(dificuldade):
     player = Canhao(groups, assets)
     all_sprites.add(player)
 
-    #Listagem dos diferentes tipos de alvos. Eles serão usados la na frente.
+    #Listagem dos diferentes tipos de alvos. Eles serão usados la na frente. Neste momentoa s listas estão vazias porém receberão um append mais tarde no loop.
     alvos_vivos = 2 * dificuldade
     todos_os_alvos = []
 
@@ -392,7 +397,7 @@ def game_screen(dificuldade):
     state = PLAYING
     
     
-    #Tiro de referencia.
+    #Tiro de referencia. Basicamente, é a quantidade de tiros que tem na tela.
     novo_tiro = None
 
     
@@ -411,6 +416,7 @@ def game_screen(dificuldade):
             if state == PLAYING:
                 # Verifica se apertou alguma tecla.
                 if event.type == pygame.KEYDOWN:
+                    #Apertar espaço para lançar o tiro
                     if event.key == pygame.K_SPACE:
 
                         #Verifica se tem um tiro no jogo que ainda não foi morto pelos limites da janela de jogo.
@@ -461,7 +467,7 @@ def game_screen(dificuldade):
                 novo_tiro = None
             
 
-        #Aqui o jogo se encerra quando alvos vivos = 0, retornando ao main menu
+        #Aqui o jogo se encerra quando alvos vivos = 0, gerando a victory screen.
         if alvos_vivos == 0:
             victoryscreen()
 
@@ -477,7 +483,7 @@ def game_screen(dificuldade):
         window.blit(assets['background'], (0, 0))
         all_sprites.draw(window)
 
-
+        #Contador dos tiros restantes.
         font = pygame.font.Font("freesansbold.ttf", 50)
         text_surf = font.render(f"Tiros restante: { tiros_restantes }", True, (0, 0, 0))
         text_rect = text_surf.get_rect(topleft=(100, 100))
@@ -491,18 +497,23 @@ def game_screen(dificuldade):
         
         
         
-        #Tela de vitória
+       #Tela de vitória ============================================================
 def victoryscreen():
+    
+    #Mensagem parabenizando o jogador
     font = pygame.font.Font("freesansbold.ttf", 100)
     text_surf = font.render("Você venceu, parabéns!", True, SELECTEDREDDISHBROWN)
     text_rect = text_surf.get_rect(center = (WIDTH//2, 200))
     window.blit(text_surf, text_rect)
-
+    
+    
+    #Instrução de como retornar ao main menu
     font = pygame.font.Font("freesansbold.ttf", 50)
     text_surf = font.render("Aperte T para voltar ao menu.", True, ORANGE)
     text_rect = text_surf.get_rect(center = (WIDTH//2, 500))
     window.blit(text_surf, text_rect)
 
+    #Assim que o jogador apertar a tecla T, o jogo retorna ao main menu.
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -516,18 +527,23 @@ def victoryscreen():
         pygame.display.update()
 
         
-        #Tela de derrota
+        #Tela de derrota =============================================================
 def losescreen():
+    
+    #Mensagem dizendo que o jogador perdeu
     font = pygame.font.Font("freesansbold.ttf", 100)
     text_surf = font.render("Você perdeu...", True, RED)
     text_rect = text_surf.get_rect(center = (WIDTH//2, 200))
     window.blit(text_surf, text_rect)
-
+    
+    
+    #Instrução de como voltar ao main menu
     font = pygame.font.Font("freesansbold.ttf", 50)
     text_surf = font.render("Aperte T para voltar ao menu.", True, ORANGE)
     text_rect = text_surf.get_rect(center = (WIDTH//2, 500))
     window.blit(text_surf, text_rect)
 
+    #Assim que o jogador apertar a tecla T, o jogo retorna ao main menu.
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -540,5 +556,5 @@ def losescreen():
 
         pygame.display.update()
 
-#Roda o main menu
+#Roda o main menu que é a primeira tela do jogo.
 mainmenu()
