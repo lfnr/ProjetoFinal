@@ -16,8 +16,16 @@ Jogo.py
 O arquivo proposta inicial é um arquivo com a primeira entrega, em que a gente colocava as nossas ideas iniciais quanto ao projeto.
 
 Além do README.txt (este arquivo), os outros uploads são as sprites/efeitos sonoros. Para o funcionamento do código, é necessário dar download neles.
+
+
 Background.png = Background do jogo
 backgroundmain.png = Background do main menu
+tiro.png = Sprite da bala
+canhao.png = Sprite do canhao
+alvo.png = Sprite do alvo
+
+canhao.mp3 = Som de tiro
+Music-Rain.wav = Musica de fundo
 
 
 Grupo composto por:
