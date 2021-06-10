@@ -10,6 +10,15 @@ Cada dificuldade aumenta o numero de alvos, sem alterar o numero de balas dispon
 Este é o link do video demonstrando o funcionamento do jogo.
 https://www.youtube.com/watch?v=xgMcxkKs5KU
 
+O arquivo de funcionamento do jogo é:
+Jogo.py
+
+O arquivo proposta inicial é um arquivo com a primeira entrega, em que a gente colocava as nossas ideas iniciais quanto ao projeto.
+
+Além do README.txt (este arquivo), os outros uploads são as sprites/efeitos sonoros. Para o funcionamento do código, é necessário dar download neles.
+Background.png = Background do jogo
+backgroundmain.png = Background do main menu
+
 
 Grupo composto por:
 Luiz Fernando Rafare
