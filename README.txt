@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=xgMcxkKs5KU
 O arquivo de funcionamento do jogo é:
 Jogo.py
 
-O arquivo proposta inicial é um arquivo com a primeira entrega, em que a gente colocava as nossas ideas iniciais quanto ao projeto.
+O arquivo "Proposta inicial" é um arquivo com a primeira entrega, em que a gente colocava as nossas ideas iniciais quanto ao projeto.
 
 Além do README.txt (este arquivo), os outros uploads são as sprites/efeitos sonoros. Para o funcionamento do código, é necessário dar download neles.
 
