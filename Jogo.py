@@ -12,7 +12,7 @@ HEIGHT = 960
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
 pygame.mixer.music.load('jogo/Music-Rain.wav')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.2)
 
 pygame.mixer.music.play(loops=-1)
 
