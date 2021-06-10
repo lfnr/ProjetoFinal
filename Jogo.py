@@ -20,7 +20,8 @@ pygame.display.set_caption('Jogo do canhão')
 
 #-------------------------------------------
 ORANGE= (255, 166, 0)
-
+RED = (255, 0, 0)
+SELECTEDREDDISHBROWN = (166, 42, 3)
 
 FPS = 30
 ALVO_WIDTH = 100
@@ -462,11 +463,11 @@ def game_screen(dificuldade):
 
         #Aqui o jogo se encerra quando alvos vivos = 0, retornando ao main menu
         if alvos_vivos == 0:
-            mainmenu()
+            victoryscreen()
 
         #Jogo se encerra quando tiros restantes for = 0 e não tiver nenhum tiro na tela.
         if tiros_restantes == 0 and novo_tiro == None:
-            mainmenu()
+            losescreen()
 
 
 
@@ -486,7 +487,58 @@ def game_screen(dificuldade):
         #Desenha a linha de mira.
         drawLine()
 
-        pygame.display.update()  # Mostra o novo frame para o jogador
+        pygame.display.update() 
+        
+        
+        
+        #Tela de vitória
+def victoryscreen():
+    font = pygame.font.Font("freesansbold.ttf", 100)
+    text_surf = font.render("Você venceu, parabéns!", True, SELECTEDREDDISHBROWN)
+    text_rect = text_surf.get_rect(center = (WIDTH//2, 200))
+    window.blit(text_surf, text_rect)
+
+    font = pygame.font.Font("freesansbold.ttf", 50)
+    text_surf = font.render("Aperte T para voltar ao menu.", True, ORANGE)
+    text_rect = text_surf.get_rect(center = (WIDTH//2, 500))
+    window.blit(text_surf, text_rect)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_t:
+                    mainmenu()
 
 
+        pygame.display.update()
+
+        
+        #Tela de derrota
+def losescreen():
+    font = pygame.font.Font("freesansbold.ttf", 100)
+    text_surf = font.render("Você perdeu...", True, RED)
+    text_rect = text_surf.get_rect(center = (WIDTH//2, 200))
+    window.blit(text_surf, text_rect)
+
+    font = pygame.font.Font("freesansbold.ttf", 50)
+    text_surf = font.render("Aperte T para voltar ao menu.", True, ORANGE)
+    text_rect = text_surf.get_rect(center = (WIDTH//2, 500))
+    window.blit(text_surf, text_rect)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_t:
+                    mainmenu()
+
+
+        pygame.display.update()
+
+#Roda o main menu
 mainmenu()
